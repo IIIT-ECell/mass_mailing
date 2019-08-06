@@ -30,18 +30,18 @@ else:
 target_csv = 'target.csv'
 
 # Sender E-Mail Address
-email_id = 'batman@justiceleague.org'
+email_id = 'ecell@iiit.ac.in'
 
 # Enter your name/organisation name for identification
-identification = 'Justice League Inc.'
+identification = 'E-Cell IIIT Hyderabad'
 
 # Mailing Server
-SMTP_server = 'mail.justiceleague.org'
+SMTP_server = 'mail.iiit.ac.in'
 
 # Mail's Subject
-subject = "Resignition Citing Lack of Superpowers"
+subject = "You CA code for Megathon"
 
-attachment_path_and_name = "./sample_attachment.jpg"
+attachment_path_and_name = ""
 
 ########################################
 
@@ -81,21 +81,23 @@ def SEND_MAIL(name, to_EMAIL, attachment):
 
 	
 	# The main body is just another attachment
-	with open('salutation.txt', 'r') as f:
+	with open('salutation.html', 'r') as f:
 		salutation = "".join(f.readlines())
-	with open('body.txt', 'r') as f:
+	with open('body.html', 'r') as f:
 		body = "".join(f.readlines())
-	content = salutation.strip() + " " + name.strip() + body.strip()
+	with open('conclusion.html', 'r') as f:
+		conclusion = "".join(f.readlines())
+	content = salutation.strip() + " " + name.strip() + body.strip() + " " + conclusion.strip()
 	body = email.mime.Text.MIMEText(content, 'html')
 	msg.attach(body)
 	
 	# Attachment
 	
-	filename=attachment
-	with open("./" + filename) as fp:
-		att = email.mime.application.MIMEApplication(fp.read(),_subtype="jpg")
-	att.add_header('Content-Disposition','attachment',filename=filename)
-	msg.attach(att)
+	# filename=attachment
+	# with open("./" + filename) as fp:
+	# 	att = email.mime.application.MIMEApplication(fp.read(),_subtype="jpg")
+	# att.add_header('Content-Disposition','attachment',filename=filename)
+	# msg.attach(att)
 	
 	# send via Gmail server
 	# NOTE: my ISP, Centurylink, seems to be automatically rewriting
@@ -116,6 +118,7 @@ def wait():
 	return
 
 if __name__=="__main__":
+
 	final_data = get_data()
 	for i, data in enumerate(final_data):
 		print("%d/%d: "%(i+1, len(final_data)),end="")
